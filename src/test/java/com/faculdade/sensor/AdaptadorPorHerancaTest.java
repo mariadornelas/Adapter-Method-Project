@@ -7,7 +7,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** O adaptador de classe (herança) deve se comportar igual ao de objeto (composição). */
 class AdaptadorPorHerancaTest {
 
     @Test
@@ -34,7 +33,6 @@ class AdaptadorPorHerancaTest {
 
     @Test
     void deveVazarAInterfaceDoLegadoParaQuemRecebeOObjeto() {
-        // limitação conhecida do adapter de classe: quem tem o adaptador também enxerga lerFahrenheit()
         AdaptadorTermometroPorHeranca a = new AdaptadorTermometroPorHeranca("T-9");
         a.simular(212.0);
 

@@ -10,7 +10,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** O painel (cliente) lendo equipamentos incompatíveis sem saber disso. */
 class PainelMonitoramentoTest {
 
     private TermometroLegadoFahrenheit termometro;
@@ -23,9 +22,9 @@ class PainelMonitoramentoTest {
         termometro = new TermometroLegadoFahrenheit("T-01");
         modbus = new TransdutorModbus(5);
         acelerometro = new AcelerometroMqtt();
-        termometro.simular(185.0);                       // 85 °C   -> ALERTA (80/90)
-        modbus.escreverRegistrador(2, 43008);            // 10,5 bar -> CRITICO (8/10)
-        acelerometro.receber("vib=3.0;unid=mm/s");       // 3,0     -> NORMAL (4,5/7,1)
+        termometro.simular(185.0);
+        modbus.escreverRegistrador(2, 43008);
+        acelerometro.receber("vib=3.0;unid=mm/s");
 
         painel = new PainelMonitoramento();
         painel.registrar(new AdaptadorTermometro(termometro), 80, 90);
@@ -53,7 +52,7 @@ class PainelMonitoramentoTest {
     void deveRefletirMudancasNosEquipamentosACadaAtualizacao() {
         painel.atualizar();
 
-        acelerometro.receber("vib=0.4;unid=in/s");       // 10,16 mm/s -> CRITICO
+        acelerometro.receber("vib=0.4;unid=in/s");
 
         assertEquals(Nivel.CRITICO, painel.atualizar().get(2).nivel());
     }
@@ -65,7 +64,7 @@ class PainelMonitoramentoTest {
 
         List<PainelMonitoramento.Resultado> r = painel.atualizar();
 
-        assertEquals(2, r.size());                       // termômetro e Modbus seguem funcionando
+        assertEquals(2, r.size());
         assertEquals(2, painel.falhas().size());
         assertTrue(painel.falhas().containsKey("V-01"));
         assertTrue(painel.falhas().containsKey("T-MUDO"));
@@ -94,7 +93,6 @@ class PainelMonitoramentoTest {
 
     @Test
     void painelNaoDevePrecisarDeAdaptadorParaFuncionar() {
-        // qualquer implementação do alvo serve: o painel não conhece os adaptadores
         PainelMonitoramento outro = new PainelMonitoramento();
         outro.registrar(new SensorMedicao() {
             public String id() { return "FIXO"; }

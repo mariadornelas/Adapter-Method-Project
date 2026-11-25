@@ -61,7 +61,7 @@ class AdaptadorTransdutorModbusTest {
     @Test
     void valorForaDosDezesseisBitsDeveVirarLeituraIndisponivel() {
         legado.escreverRegistrador(2, 65535);
-        assertDoesNotThrow(adaptador::medir);          // 65535 ainda vale
+        assertDoesNotThrow(adaptador::medir);
 
         legado.escreverRegistrador(2, 65536);
         assertThrows(LeituraIndisponivelException.class, adaptador::medir);

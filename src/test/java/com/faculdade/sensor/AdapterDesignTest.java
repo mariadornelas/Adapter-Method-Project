@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Estrutura do padrão: o legado não conhece o alvo, os adaptadores fazem a ponte, o cliente só vê o alvo. */
 class AdapterDesignTest {
 
     @Test
